@@ -4,7 +4,7 @@ in each new API call.
 """
 from openai import OpenAI
 
-client = OpenAI(api_key="sk-proj-COUnCM3M7Z2aYJOakUaWT3BlbkFJsAOiHg9tyt72G1fekYJE")
+client = OpenAI(api_key="YOUR-API-KEY")
 
 print("Welcome to ChatGPT! Type 'quit', 'exit', or 'bye' to end the conversation.")
 # include the AI's area of expertise, will be the first item in every API call
