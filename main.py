@@ -2,15 +2,11 @@
 This version maintains continuity of conversation by including chat history
 in each new API call.
 """
-from openai import OpenAI
+from ollama import chat
+from ollama import ChatResponse
 
-client = OpenAI(api_key="YOUR-API-KEY")
-
-print("Welcome to ChatGPT! Type 'quit', 'exit', or 'bye' to end the conversation.")
-# include the AI's area of expertise, will be the first item in every API call
-ai_specialization = input("What is my area of expertise? ")
-system_prompt = {'role': 'system', 'content': 'You are a '+ ai_specialization}
-# keep track of conversation to include with each API call
+system_prompt = {'role': 'system', 'content': 'You are a helpful assistant.'}
+# keep track of conversation to include with each chat call
 chat_history = []
 while True:
     # ask user question
@@ -22,12 +18,12 @@ while True:
     user_input = user_input + "Please keep your response to 50 words or fewer."
     # append to chat history
     chat_history.append({'role': 'user', 'content': user_input })
-    # start messages dict list with area of expertise and add recent chat history
+    # start messages dictionary list with system prompt and add recent chat history
     messages = [system_prompt]
     messages.extend(chat_history)
-    # send request to API
+    # send request to chat
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gemma3:2b",
         messages=messages,
     )
     # add response to chat history and remove oldest items
