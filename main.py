@@ -22,15 +22,31 @@ while True:
     messages = [system_prompt]
     messages.extend(chat_history)
     # send request to chat
-    completion = client.chat.completions.create(
-        model="gemma3:2b",
+    response: ChatResponse = chat(
+        model='gemma3:2b',
         messages=messages,
     )
     # add response to chat history and remove oldest items
-    response = completion.choices[0].message.content.strip()
+    response = response.choices[0].message.content.strip()
     chat_history.append({'role':'assistant','content': response})
     chat_history = chat_history[-10:]
 #     for message in messages:
 #         print(message)
     # display response
-    print(completion.choices[0].message.content.strip())
+    print(response['message']['content'])
+"""
+response: ChatResponse = chat(
+  model='gemma3:latest',
+  messages=[
+    {
+        'role': 'system',
+        'content': 'You are a helpful assistant.',
+    },
+    {
+        'role': 'user',
+        'content': 'Why is the sky blue?',
+    },
+  ],
+)
+print(response['message']['content'])
+"""
